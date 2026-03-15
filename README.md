@@ -11,16 +11,16 @@
 
 ## 📋 Daftar Isi
 
-1. [Deskripsi Proyek](#deskripsi-proyek)
-2. [Fitur Utama](#fitur-utama)
-3. [Tech Stack](#tech-stack)
-4. [Instalasi](#instalasi)
-5. [Konfigurasi](#konfigurasi)
-6. [Struktur Database](#struktur-database)
-7. [Cara Menggunakan](#cara-menggunakan)
-8. [Algoritma Inference Engine](#algoritma-inference-engine)
-9. [API Documentation](#api-documentation)
-10. [Troubleshooting](#troubleshooting)
+1. [Deskripsi Proyek](#-deskripsi-proyek)
+2. [Fitur Utama](#-fitur-utama)
+3. [Tech Stack](#-tech-stack)
+4. [Instalasi](#-instalasi)
+5. [Konfigurasi](#-konfigurasi)
+6. [Struktur Database](#-struktur-database)
+7. [Cara Menggunakan](#-cara-menggunakan)
+8. [Algoritma Inference Engine](#-algoritma-inference-engine)
+9. [API Documentation](#-api-documentation)
+10. [Troubleshooting](#-troubleshooting)
 
 ---
 
