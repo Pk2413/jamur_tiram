@@ -65,13 +65,6 @@ class DiagnosisController extends Controller
         }
     }
 
-    /**
-     * API endpoint untuk diagnosis (JSON response).
-     */
-    public function apiProcess(Request $request)
-    {
-        // ... (existing code)
-    }
 
     /**
      * Menampilkan halaman riwayat diagnosis.

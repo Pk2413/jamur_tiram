@@ -33,7 +33,7 @@
                                     class="mt-1 h-5 w-5 rounded border-green-300 text-green-600 focus:ring-green-500">
                                 <div class="flex flex-col">
                                     <span class="font-bold text-gray-700">{{ $gejala->nama }}
-                                        <span class="text-sm font-light text-gray-800">[{{ $gejala->kode }}]</span>
+                                        <!-- <span class="text-sm font-light text-gray-800">[{{ $gejala->kode }}]</span> -->
                                     </span>
 
                                 </div>

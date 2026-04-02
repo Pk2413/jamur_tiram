@@ -26,6 +26,7 @@
 
             <div class="mx-auto max-w-4xl">
                 @foreach ($results as $index => $result)
+                    @if($index == 0)
                     <div
                         class="mb-10 overflow-hidden rounded-3xl border border-green-100 bg-white shadow-2xl transition duration-300 hover:shadow-green-100">
                         <!-- Header Penyakit -->
@@ -105,14 +106,6 @@
                             </div>
                         </div>
                     </div>
-
-                    @if ($index == 0 && count($results) > 1)
-                        <div class="relative my-10 text-center">
-                            <hr class="border-gray-300">
-                            <span
-                                class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-green-50 px-4 text-sm font-semibold uppercase tracking-widest text-gray-500">Alternatif
-                                Diagnosis Lainnya</span>
-                        </div>
                     @endif
                 @endforeach
 
