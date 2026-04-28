@@ -94,7 +94,7 @@
                 <div class="flex items-center space-x-6">
                     <div class="text-right">
                         <span class="text-xs text-gray-400 block uppercase font-bold">Confidence</span>
-                        <span class="text-xl font-black text-green-600">${(item.confidence_level * 100).toFixed(2)}%</span>
+                        <span class="text-xl font-black text-green-600">${item.confidence_level.toFixed(2)}%</span>
                     </div>
                     <div class="flex items-center space-x-3">
                         <a href="/riwayat/${item.id}" class="bg-green-50 text-green-600 p-2 rounded-lg hover:bg-green-100 transition" title="Lihat Detail">

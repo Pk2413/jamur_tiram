@@ -24,8 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GejalaSeeder::class,
             PenyakitSeeder::class,
-            RuleSeeder::class,
-            RuleDetailSeeder::class,
             PenyakitGejalaSeeder::class,
         ]);
     }

@@ -18,10 +18,6 @@
             <!-- Judul -->
             <div class="mb-10 text-center text-gray-900">
                 <h1 class="mb-3 text-4xl font-extrabold">Hasil Diagnosis Jamur Tiram</h1>
-                <p class="mx-auto max-w-2xl text-gray-600">
-                    Berdasarkan gejala-gejala yang Anda berikan, berikut adalah hasil analisis sistem menggunakan metode
-                    <span class="font-semibold text-green-700">Certainty Factor</span>.
-                </p>
             </div>
 
             <div class="mx-auto max-w-4xl">
@@ -41,7 +37,7 @@
                             <div class="text-right">
                                 <span class="text-sm font-medium leading-tight text-white opacity-80">Tingkat
                                     Keyakinan:</span>
-                                <div class="text-4xl font-black leading-tight text-white">{{ $result['percentage'] }}%</div>
+                                <div class="text-4xl font-black leading-tight text-white">{{ $result['cf_percentage'] }}%</div>
                             </div>
                         </div>
 

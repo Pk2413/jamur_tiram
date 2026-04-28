@@ -51,7 +51,7 @@ class DiagnosisController extends Controller
             $history = $this->diagnosisService->saveHistory(
                 $selectedGejalaIds,
                 $bestResult['penyakit']->id,
-                $bestResult['cf_value']
+                $bestResult['cf_percentage']
             );
 
             return view('diagnosis.hasil', [
@@ -89,7 +89,26 @@ class DiagnosisController extends Controller
             })
             ->values();
 
-        return response()->json($histories);
+        // Transform data to include related penyakit
+        $data = $histories->map(function ($history) {
+            return [
+                'id' => $history->id,
+                'gejala_terpilih' => $history->gejala_terpilih,
+                'hasil_penyakit_id' => $history->hasil_penyakit_id,
+                'confidence_level' => floatval($history->confidence_level),
+                'created_at' => $history->created_at,
+                'updated_at' => $history->updated_at,
+                'penyakit' => $history->penyakit ? [
+                    'id' => $history->penyakit->id,
+                    'kode' => $history->penyakit->kode,
+                    'nama' => $history->penyakit->nama,
+                    'deskripsi' => $history->penyakit->deskripsi,
+                    'solusi' => $history->penyakit->solusi,
+                ] : null
+            ];
+        });
+
+        return response()->json($data);
     }
 
     /**
@@ -106,9 +125,9 @@ class DiagnosisController extends Controller
         // Rekonstruksi hasil untuk view yang sama dengan hasil diagnosis
         $results = [[
             'penyakit' => $history->penyakit,
-            'cf_value' => $history->confidence_level,
-            'percentage' => round($history->confidence_level * 100, 2),
-            'status' => $this->diagnosisService->getConfidenceStatus($history->confidence_level),
+            'cf_value' => $history->confidence_level / 100,
+            'cf_percentage' => $history->confidence_level,
+            'status' => $this->diagnosisService->getConfidenceStatus($history->confidence_level / 100),
             'solusi' => $history->penyakit->solusi
         ]];
 
