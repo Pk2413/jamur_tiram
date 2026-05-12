@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Tree - Diagnosis Jamur Tiram</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 1400px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        h1 {
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        
+        .subtitle {
+            color: #718096;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+        
+        .info {
+            margin-top: 40px;
+            background: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .info h2 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .rules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .rule-item {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 3px solid #667eea;
+        }
+        
+        .rule-item strong {
+            color: #667eea;
+        }
+        
+        .rule-item p {
+            color: #4a5568;
+            margin-top: 8px;
+            font-size: 0.95em;
+        }
+        
+        footer {
+            color: white;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>🍄 Decision Tree - Diagnosis Jamur Tiram</h1>
+    
+    <div class="container">
+        <p class="subtitle">Struktur Hierarki Keputusan untuk Diagnosis Penyakit Jamur Tiram</p>
+        
+        <div class="mermaid">
+            graph TD
+                A["🌱 Diagnosis Jamur Tiram<br/>Primary Symptoms: 1,5,8,11,12,14"] --> B["Gejala 11<br/>Tubuh Buah Pucat"]
+                A --> C["Gejala 12<br/>Umbi Membusuk"]
+                A --> D["Gejala 10<br/>Kepala Susu Coklat"]
+                A --> E["Gejala 1<br/>Jamur Putih pada Kepala Susu"]
+                A --> F["Gejala 22<br/>Bau Menyengat"]
+                A --> G["Gejala 14<br/>Kepala Susu Kerdil"]
+                A --> H["Gejala 8<br/>Kepala Susu Berlendir"]
+                A --> I["Gejala 4<br/>Pertumbuhan Terganggu"]
+                
+                B --> B1["Gejala 17<br/>Ada Lendir"]
+                B --> B2["Gejala 22<br/>Bau Menyengat"]
+                B1 -->|Penyakit 1| B1R["🍄 Penyakit 1<br/>R1"]
+                B2 -->|Penyakit 4| B2R["🍄 Penyakit 4<br/>R4"]
+                
+                C --> C1["Gejala 5<br/>Substrat Basah"]
+                C1 -->|Penyakit 2| C1R["🍄 Penyakit 2<br/>R2"]
+                
+                D --> D1["Gejala 5<br/>Substrat Basah"]
+                D1 -->|Penyakit 3| D1R["🍄 Penyakit 3<br/>R3"]
+                
+                E --> E1["Gejala 9<br/>Busuk Pangkal"]
+                E --> E2["Gejala 2<br/>Berbau Asam"]
+                E1 -->|Penyakit 5| E1R["🍄 Penyakit 5<br/>R5"]
+                E2 -->|Penyakit 9| E2R["🍄 Penyakit 9<br/>R9"]
+                
+                F --> F1["Gejala 8<br/>Kepala Susu Berlendir"]
+                F1 -->|Penyakit 6| F1R["🍄 Penyakit 6<br/>R6"]
+                
+                G --> G1["Gejala 23<br/>Warna Tidak Seragam"]
+                G1 -->|Penyakit 7| G1R["🍄 Penyakit 7<br/>R7"]
+                
+                H --> H1["Gejala 19<br/>Miselium Tidak Berkembang"]
+                H1 -->|Penyakit 8| H1R["🍄 Penyakit 8<br/>R8"]
+                
+                I --> I1["Gejala 18<br/>Kontaminan Terlihat"]
+                I1 -->|Penyakit 10| I1R["🍄 Penyakit 10<br/>R10"]
+                
+                style A fill:#90EE90
+                style B1R fill:#FFB6C1
+                style B2R fill:#FFB6C1
+                style C1R fill:#FFB6C1
+                style D1R fill:#FFB6C1
+                style E1R fill:#FFB6C1
+                style E2R fill:#FFB6C1
+                style F1R fill:#FFB6C1
+                style G1R fill:#FFB6C1
+                style H1R fill:#FFB6C1
+                style I1R fill:#FFB6C1
+        </div>
+        
+        <div class="info">
+            <h2>📋 Penjelasan Rules</h2>
+            <div class="rules">
+                <div class="rule-item">
+                    <strong>R1:</strong>
+                    <p>IF Tubuh Buah Pucat (11) AND Ada Lendir (17) THEN Penyakit 1</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R2:</strong>
+                    <p>IF Umbi Membusuk (12) AND Substrat Basah (5) THEN Penyakit 2</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R3:</strong>
+                    <p>IF Kepala Susu Coklat (10) AND Substrat Basah (5) THEN Penyakit 3</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R4:</strong>
+                    <p>IF Tubuh Buah Pucat (11) AND Bau Menyengat (22) THEN Penyakit 4</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R5:</strong>
+                    <p>IF Jamur Putih (1) AND Busuk Pangkal (9) THEN Penyakit 5</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R6:</strong>
+                    <p>IF Bau Menyengat (22) AND Kepala Susu Berlendir (8) THEN Penyakit 6</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R7:</strong>
+                    <p>IF Kepala Susu Kerdil (14) AND Warna Tidak Seragam (23) THEN Penyakit 7</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R8:</strong>
+                    <p>IF Kepala Susu Berlendir (8) AND Miselium Tidak Berkembang (19) THEN Penyakit 8</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R9:</strong>
+                    <p>IF Jamur Putih (1) AND Berbau Asam (2) THEN Penyakit 9</p>
+                </div>
+                <div class="rule-item">
+                    <strong>R10:</strong>
+                    <p>IF Pertumbuhan Terganggu (4) AND Kontaminan Terlihat (18) THEN Penyakit 10</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>🌾 Sistem Expert System - Diagnosis Penyakit Jamur Tiram</p>
+        <p>Forward Chaining + Decision Tree + Certainty Factor</p>
+    </footer>
+    
+    <script>
+        mermaid.contentLoaderAsync();
+    </script>
+</body>
+</html>

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->json('gejala_terpilih');  // Array gejala IDs
             $table->foreignId('hasil_penyakit_id')->constrained('penyakit')->onDelete('cascade');
-            $table->decimal('confidence_level', 5, 2);  // 0-100
+            $table->float('confidence_level');  // 0-100
             $table->timestamps();
         });
     }

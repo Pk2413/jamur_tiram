@@ -16,7 +16,7 @@
 
             @if (session('error'))
                 <div class="mx-auto mb-6 max-w-4xl border-l-4 border-red-500 bg-red-100 p-4 text-red-700">
-                    {{ session('error') }}
+                    {!! nl2br(e(session('error'))) !!}
                 </div>
             @endif
 
@@ -33,7 +33,7 @@
                                     class="mt-1 h-5 w-5 rounded border-green-300 text-green-600 focus:ring-green-500">
                                 <div class="flex flex-col">
                                     <span class="font-bold text-gray-700">{{ $gejala->nama }}
-                                        <span class="text-sm font-light text-gray-800">[{{ $gejala->kode }}]</span>
+                                        <!-- <span class="text-sm font-light text-gray-800">[{{ $gejala->kode }}]</span> -->
                                     </span>
 
                                 </div>
