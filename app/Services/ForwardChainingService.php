@@ -23,43 +23,91 @@ class ForwardChainingService
     ];
 
     /**
+     * Mapping gejala kode ke ID
+     * Digunakan untuk konversi dari kode gejala ke gejala_id di database
+     */
+    private $gejalaKodeMap = [
+        'G01' => 1,
+        'G02' => 2,
+        'G04' => 3,
+        'G05' => 4,
+        'G06' => 5,
+        'G07' => 6,
+        'G08' => 7,
+        'G09' => 8,
+        'G10' => 9,
+        'G11' => 10,
+        'G12' => 11,
+        'G13' => 12,
+        'G14' => 13,
+        'G15' => 14,
+        'G16' => 15,
+        'G17' => 16,
+        'G18' => 17,
+        'G19' => 18,
+        'G20' => 19,
+        'G21' => 20,
+        'G22' => 21,
+        'G23' => 22,
+        'G24' => 23,
+        'G25' => 24,
+    ];
+
+    /**
      * Data relasi penyakit-gejala dengan CF pakar
      */
     private $penyakitGejala = [
-        ['penyakit_id' => 1, 'gejala_id' => 11, 'cf_pakar' => 1],
+        // R1: P01 - G12 AND G18 AND G06 AND G07
+        ['penyakit_id' => 1, 'gejala_id' => 11, 'cf_pakar' => 1.0],
         ['penyakit_id' => 1, 'gejala_id' => 17, 'cf_pakar' => 0.8],
         ['penyakit_id' => 1, 'gejala_id' => 5, 'cf_pakar' => 0.6],
         ['penyakit_id' => 1, 'gejala_id' => 6, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 2, 'gejala_id' => 12, 'cf_pakar' => 1],
+        
+        // R2: P02 - G13 AND G06 AND G07
+        ['penyakit_id' => 2, 'gejala_id' => 12, 'cf_pakar' => 1.0],
         ['penyakit_id' => 2, 'gejala_id' => 5, 'cf_pakar' => 0.6],
         ['penyakit_id' => 2, 'gejala_id' => 6, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 3, 'gejala_id' => 10, 'cf_pakar' => 1],
+        
+        // R3: P03 - G11 AND G06 AND G07
+        ['penyakit_id' => 3, 'gejala_id' => 10, 'cf_pakar' => 1.0],
         ['penyakit_id' => 3, 'gejala_id' => 5, 'cf_pakar' => 0.6],
         ['penyakit_id' => 3, 'gejala_id' => 6, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 4, 'gejala_id' => 11, 'cf_pakar' => 1],
-        ['penyakit_id' => 4, 'gejala_id' => 5, 'cf_pakar' => 0.6],
+        
+        // R4: P04 - G12 AND G23 AND G06
+        ['penyakit_id' => 4, 'gejala_id' => 11, 'cf_pakar' => 1.0],
         ['penyakit_id' => 4, 'gejala_id' => 22, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 5, 'gejala_id' => 1, 'cf_pakar' => 1],
+        ['penyakit_id' => 4, 'gejala_id' => 5, 'cf_pakar' => 0.6],
+        
+        // R5: P05 - G01 AND G10 AND G14 AND G22
+        ['penyakit_id' => 5, 'gejala_id' => 1, 'cf_pakar' => 1.0],
         ['penyakit_id' => 5, 'gejala_id' => 9, 'cf_pakar' => 0.8],
         ['penyakit_id' => 5, 'gejala_id' => 13, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 5, 'gejala_id' => 15, 'cf_pakar' => 0.4],
-        ['penyakit_id' => 5, 'gejala_id' => 16, 'cf_pakar' => 0.6],
         ['penyakit_id' => 5, 'gejala_id' => 21, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 6, 'gejala_id' => 22, 'cf_pakar' => 1],
+        
+        // R6: P06 - G23 AND G06 AND G09
+        ['penyakit_id' => 6, 'gejala_id' => 22, 'cf_pakar' => 1.0],
         ['penyakit_id' => 6, 'gejala_id' => 5, 'cf_pakar' => 0.6],
         ['penyakit_id' => 6, 'gejala_id' => 8, 'cf_pakar' => 0.6],
-        ['penyakit_id' => 7, 'gejala_id' => 14, 'cf_pakar' => 1],
-        ['penyakit_id' => 7, 'gejala_id' => 23, 'cf_pakar' => 0.6],
+        
+        // R7: P07 - G15 AND G24 AND G20
+        ['penyakit_id' => 7, 'gejala_id' => 14, 'cf_pakar' => 1.0],
+        ['penyakit_id' => 7, 'gejala_id' => 23, 'cf_pakar' => 0.8],
         ['penyakit_id' => 7, 'gejala_id' => 19, 'cf_pakar' => 0.6],
-        ['penyakit_id' => 8, 'gejala_id' => 8, 'cf_pakar' => 0.8],
+        
+        // R8: P08 - G09 AND G24 AND G20
+        ['penyakit_id' => 8, 'gejala_id' => 8, 'cf_pakar' => 1.0],
         ['penyakit_id' => 8, 'gejala_id' => 23, 'cf_pakar' => 0.8],
         ['penyakit_id' => 8, 'gejala_id' => 19, 'cf_pakar' => 0.6],
-        ['penyakit_id' => 9, 'gejala_id' => 1, 'cf_pakar' => 0.6],
-        ['penyakit_id' => 9, 'gejala_id' => 2, 'cf_pakar' => 0.6],
+        
+        // R9: P09 - G01 AND G02 AND G25
+        ['penyakit_id' => 9, 'gejala_id' => 1, 'cf_pakar' => 1.0],
+        ['penyakit_id' => 9, 'gejala_id' => 2, 'cf_pakar' => 0.8],
         ['penyakit_id' => 9, 'gejala_id' => 24, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 10, 'gejala_id' => 4, 'cf_pakar' => 0.8],
+        
+        // R10: P10 - G05 AND G19 AND G25
+        ['penyakit_id' => 10, 'gejala_id' => 4, 'cf_pakar' => 1.0],
         ['penyakit_id' => 10, 'gejala_id' => 18, 'cf_pakar' => 0.8],
-        ['penyakit_id' => 10, 'gejala_id' => 24, 'cf_pakar' => 0.6],
+        ['penyakit_id' => 10, 'gejala_id' => 24, 'cf_pakar' => 0.8],
     ];
 
     /**

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @if (isset($history_id))
+    @if (isset($history_id) && $history_id !== null)
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 let history = JSON.parse(localStorage.getItem('diagnosis_history') || '[]');
@@ -18,26 +18,53 @@
             <!-- Judul -->
             <div class="mb-10 text-center text-gray-900">
                 <h1 class="mb-3 text-4xl font-extrabold">Hasil Diagnosis Jamur Tiram</h1>
+                <p class="text-gray-600">Analisis menggunakan metode Certainty Factor dengan kombinasi gejala terpilih</p>
             </div>
 
             <div class="mx-auto max-w-4xl">
-                @foreach ($results as $index => $result)
-                    @if($index == 0)
+                @if(isset($is_error) && $is_error && count($results) == 0)
+                    <!-- Error: No Matching Diseases (Red) -->
+                    <div class="mb-10 overflow-hidden rounded-3xl border-l-4 border-red-500 bg-red-50 p-8 shadow-lg">
+                        <div class="flex items-start">
+                            <div class="mr-4 text-4xl">❌</div>
+                            <div class="flex-1">
+                                <h2 class="mb-4 text-2xl font-bold text-red-900">Tidak Ada Penyakit yang Cocok</h2>
+                                <div class="text-red-800" style="white-space: pre-line; line-height: 1.8;">
+                                    {!! nl2br(e($error_message)) !!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @else
+                    <!-- Result: Tampilkan Penyakit dengan Akurasi Tertinggi -->
+                    @php
+                        // Cari hasil dengan cf_percentage tertinggi
+                        $bestResult = null;
+                        $maxPercentage = -1;
+                        foreach ($results as $result) {
+                            if ($result['cf_percentage'] > $maxPercentage) {
+                                $maxPercentage = $result['cf_percentage'];
+                                $bestResult = $result;
+                            }
+                        }
+                    @endphp
+                    
+                    @if($bestResult)
                     <div
                         class="mb-10 overflow-hidden rounded-3xl border border-green-100 bg-white shadow-2xl transition duration-300 hover:shadow-green-100">
                         <!-- Header Penyakit -->
                         <div
-                            class="{{ $index == 0 ? 'bg-green-600' : 'bg-gray-600' }} flex items-center justify-between px-8 py-6 text-white">
+                            class="bg-green-600 flex items-center justify-between px-8 py-6 text-white">
                             <div>
                                 <span
-                                    class="text-sm font-medium uppercase tracking-wider text-white decoration-white opacity-80">[{{ $result['penyakit']->kode }}]
+                                    class="text-sm font-medium uppercase tracking-wider text-white decoration-white opacity-80">[{{ $bestResult['penyakit']->kode }}]
                                     Kemungkinan Penyakit/Hama:</span>
-                                <h2 class="mt-1 text-3xl font-extrabold text-white">{{ $result['penyakit']->nama }}</h2>
+                                <h2 class="mt-1 text-3xl font-extrabold text-white">{{ $bestResult['penyakit']->nama }}</h2>
                             </div>
                             <div class="text-right">
                                 <span class="text-sm font-medium leading-tight text-white opacity-80">Tingkat
                                     Keyakinan:</span>
-                                <div class="text-4xl font-black leading-tight text-white">{{ $result['cf_percentage'] }}%</div>
+                                <div class="text-4xl font-black leading-tight text-white">{{ min($bestResult['cf_percentage'], 93) }}%</div>
                             </div>
                         </div>
 
@@ -51,7 +78,7 @@
                                 <div>
                                     <span class="text-sm font-medium leading-tight text-gray-500">Status Diagnosis:</span>
                                     <div class="text-xl font-bold leading-tight text-green-800">Sangat Yakin <span
-                                            class="ml-2 rounded bg-green-200 px-2 py-1 text-xs text-green-800">{{ $result['status'] }}</span>
+                                            class="ml-2 rounded bg-green-200 px-2 py-1 text-xs text-green-800">{{ $bestResult['status'] }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -64,7 +91,7 @@
                                         <span class="mr-2">📝</span> Deskripsi
                                     </h3>
                                     <p class="text-justify leading-relaxed text-gray-600">
-                                        {{ $result['penyakit']->deskripsi }}
+                                        {{ $bestResult['penyakit']->deskripsi }}
                                     </p>
                                 </div>
                                 <div>
@@ -74,7 +101,7 @@
                                     </h3>
                                     <ul class="space-y-3">
                                         @php
-                                            $solusiData = $result['solusi'];
+                                            $solusiData = $bestResult['solusi'];
                                             if (is_string($solusiData)) {
                                                 // Coba decode jika string JSON
                                                 $decoded = json_decode($solusiData, true);
@@ -103,7 +130,7 @@
                         </div>
                     </div>
                     @endif
-                @endforeach
+                @endif
 
                 <!-- Action Buttons -->
                 <div class="mt-12 flex flex-col items-center justify-center gap-4 md:flex-row">
@@ -111,10 +138,10 @@
                         class="w-full transform rounded-2xl bg-green-600 px-10 py-4 text-center font-bold text-white shadow-xl transition hover:-translate-y-1 hover:bg-green-700 md:w-auto">
                         🔄 Diagnosis Ulang
                     </a>
-                    <a href="/"
+                    <!-- <a href="/"
                         class="w-full transform rounded-2xl border-2 border-green-600 bg-white px-10 py-4 text-center font-bold text-green-600 shadow-lg transition hover:-translate-y-1 hover:bg-green-50 md:w-auto">
                         🏠 Kembali ke Beranda
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </div>

@@ -16,7 +16,7 @@
 
             @if (session('error'))
                 <div class="mx-auto mb-6 max-w-4xl border-l-4 border-red-500 bg-red-100 p-4 text-red-700">
-                    {{ session('error') }}
+                    {!! nl2br(e(session('error'))) !!}
                 </div>
             @endif
 

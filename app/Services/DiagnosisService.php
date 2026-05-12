@@ -42,8 +42,14 @@ class DiagnosisService
 
         // Step 3: Certainty Factor - Hitung confidence untuk setiap penyakit yang matched
         foreach ($matchingDiseases as $penyakit) {
-            $cfValue = $this->certaintyFactor->calculateCF($penyakit->id, $selectedGejalaIds, $cfUserMap);
-            $cfPercentage = $this->certaintyFactor->toPercentage($cfValue);
+            $cfDetails = $this->certaintyFactor->calculateCFWithDetails($penyakit->id, $selectedGejalaIds, $cfUserMap);
+            
+            // Skip penyakit yang tidak memiliki gejala yang cocok
+            if (!$cfDetails['has_matching_symptoms']) {
+                continue;
+            }
+
+            $cfPercentage = $cfDetails['cf_percentage'];
 
             // Cari decision tree path yang relevan dengan penyakit ini
             $relatedPaths = array_filter($decisionTreePaths, function ($path) use ($penyakit) {
@@ -52,15 +58,20 @@ class DiagnosisService
 
             $results[] = [
                 'penyakit' => $penyakit,
-                'cf_value' => $cfValue,
-                'cf_percentage' => $cfPercentage,  // CF value as percentage (0-100)
+                'cf_value' => $cfDetails['cf_value'],
+                'cf_percentage' => $cfPercentage,  // CF value as integer percentage (0-100)
+                'cf_percentage_float' => $cfDetails['cf_percentage_float'],  // CF value as float percentage
                 'confidence_level' => $cfPercentage,  // Alias untuk di-save ke database
-                'status' => $this->getConfidenceStatus($cfValue),
+                'status' => $this->getConfidenceStatus($cfDetails['cf_value']),
                 'solusi' => $penyakit->solusi,
                 // Reasoning & Logic
                 'forward_chaining_matched' => true,
                 'decision_tree_paths' => array_values($relatedPaths),
-                'matched_symptoms' => $this->getMatchedSymptoms($penyakit->id, $selectedGejalaIds)
+                'matched_symptoms' => $this->getMatchedSymptoms($penyakit->id, $selectedGejalaIds),
+                // Calculation details for transparency
+                'calculation_details' => $cfDetails['calculation_details'] ?? null,
+                'symptoms_detail' => $cfDetails['symptoms_detail'] ?? [],
+                'combine_steps' => $cfDetails['combine_steps'] ?? []
             ];
         }
 
